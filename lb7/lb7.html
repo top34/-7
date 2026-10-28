@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Форма реєстрації</title>
+    <style>
+        body { font-family: Arial, sans-serif; display: flex; justify-content: center; padding-top: 50px; background-color: #f4f4f4;}
+        .form-container { background: white; padding: 25px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); width: 350px;}
+        .form-container h2 { text-align: center; margin-bottom: 20px; }
+        .form-group { margin-bottom: 15px; }
+        label { display: block; margin-bottom: 5px; font-weight: bold; font-size: 14px;}
+        input[type="text"], input[type="email"], input[type="password"], input[type="number"] { 
+            width: 100%; padding: 8px; box-sizing: border-box; border: 1px solid #ccc; border-radius: 4px;
+        }
+        .radio-group { display: flex; gap: 15px; }
+        .radio-group label { font-weight: normal; }
+        button { width: 100%; padding: 10px; background-color: #008000; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 16px;}
+        button:hover { background-color: #006400; }
+    </style>
+</head>
+<body>
+
+<div class="form-container">
+    <h2>Форма реєстрації</h2>
+    <form id="registrationForm">
+        <div class="form-group">
+            <label for="name">Ім'я:</label>
+            <input type="text" id="name" required>
+        </div>
+        <div class="form-group">
+            <label for="email">Email:</label>
+            <input type="email" id="email" required>
+        </div>
+        <div class="form-group">
+            <label for="password">Пароль:</label>
+            <input type="password" id="password" minlength="6" required>
+        </div>
+        <div class="form-group">
+            <label for="confirmPassword">Повторіть пароль:</label>
+            <input type="password" id="confirmPassword" required>
+        </div>
+        <div class="form-group">
+            <label for="age">Вік:</label>
+            <input type="number" id="age" min="10" required>
+        </div>
+
+        <div class="form-group">
+            <label>Стать:</label>
+            <div class="radio-group">
+                <input type="radio" id="male" name="gender" value="Чоловік">
+                <label for="male">Чоловік</label>
+                <input type="radio" id="female" name="gender" value="Жінка">
+                <label for="female">Жінка</label>
+            </div>
+        </div>
+        <button type="submit">Зареєструватися</button>
+    </form>
+</div>
+
+<script>
+    document.getElementById('registrationForm').addEventListener('submit', function(event) {
+        // Зупиняємо стандартну відправку форми
+        event.preventDefault(); 
+
+        // Отримання значень
+        let name = document.getElementById('name').value.trim();
+        let email = document.getElementById('email').value.trim();
+        let password = document.getElementById('password').value;
+        let confirmPassword = document.getElementById('confirmPassword').value;
+        let age = document.getElementById('age').value;
+        
+        // Отримання значення радіокнопок
+        let gender = document.querySelector('input[name="gender"]:checked');
+
+        // Перевірка пароля на мінімальну довжину
+        if (password.length < 6) {
+            alert("Пароль має містити мінімум 6 символів!");
+            return;
+        }
+
+        // Перевірка на збіг паролів
+        if (password !== confirmPassword) {
+            alert("Помилка: Паролі не збігаються!");
+            return;
+        }
+
+        // Перевірка віку (10+)
+        if (age < 10) {
+            alert("Помилка: Ваш вік повинен бути 10 або більше років!");
+            return;
+        }
+
+        // Перевірка статі
+        if (!gender) {
+            alert("Помилка: Будь ласка, виберіть стать!");
+            return;
+        }
+
+        // Якщо всі валідації пройшли успішно
+        alert("Реєстрація успішна!");
+    });
+</script>
+
+</body>
+</html>
